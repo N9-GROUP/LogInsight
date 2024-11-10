@@ -36,9 +36,24 @@ void stop_monitoring()
   {
     printf("│ ⬤  Elapsed time: %.3f milliseconds\n", elapsed * 1000);
   }
-  else
+  else if (elapsed < 60.0)
   {
     printf("│ ⬤  Elapsed time: %.3f seconds\n", elapsed);
+  }
+  else if (elapsed < 3600.0)
+  {
+    double minutes = elapsed / 60.0;
+    printf("│ ⬤  Elapsed time: %.3f minutes\n", minutes);
+  }
+  else if (elapsed < 86400.0)
+  {
+    double hours = elapsed / 3600.0;
+    printf("│ ⬤  Elapsed time: %.3f hours\n", hours);
+  }
+  else
+  {
+    double days = elapsed / 86400.0;
+    printf("│ ⬤  Elapsed time: %.3f days\n", days);
   }
 
   if (memory_used < 1024)

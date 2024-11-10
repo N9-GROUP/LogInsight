@@ -128,16 +128,27 @@ void count_log_levels(const char *line)
   pthread_mutex_unlock(&count_mutex);
 }
 
-void process_line(const char *line, char *filter_levels[], int filter_count)
+void process_line(const char *line, char *filter_levels[], int filter_count, int print_lines)
 {
   if (should_print_log(line, filter_levels, filter_count))
   {
-    colorize_log(line);
+    if (print_lines)
+    {
+      colorize_log(line);
+      count_log_levels(line);
+    }
+    else
+    {
+      count_log_levels(line);
+    }
+  }
+  else
+  {
     count_log_levels(line);
   }
 }
 
-void start_log_monitor(const char *file_name, char *filter_levels[], int filter_count, int real_time, int show_stats)
+void start_log_monitor(const char *file_name, char *filter_levels[], int filter_count, int real_time, int show_stats, int print_lines)
 {
   signal(SIGINT, handle_signal);
 
@@ -174,11 +185,10 @@ void start_log_monitor(const char *file_name, char *filter_levels[], int filter_
       while ((line_end = strchr(line_start, '\n')) != NULL)
       {
         *line_end = '\0';
-        process_line(line_start, filter_levels, filter_count);
+        process_line(line_start, filter_levels, filter_count, print_lines);
         line_start = line_end + 1;
       }
 
-      // Move remaining data to the beginning of the buffer
       current_length -= (line_start - buffer);
       memmove(buffer, line_start, current_length);
     }
@@ -262,7 +272,7 @@ void start_log_monitor(const char *file_name, char *filter_levels[], int filter_
       while ((line_end = strchr(line_start, '\n')) != NULL)
       {
         *line_end = '\0';
-        process_line(line_start, filter_levels, filter_count);
+        process_line(line_start, filter_levels, filter_count, print_lines);
         line_start = line_end + 1;
       }
 
@@ -278,10 +288,7 @@ void start_log_monitor(const char *file_name, char *filter_levels[], int filter_
   print_file_size(file_name);
   print_statistics();
   free_regex_patterns();
-  if (show_stats)
-  {
-    stop_monitoring();
-  }
+  stop_monitoring();
 
   close(fd);
   free(buffer);
