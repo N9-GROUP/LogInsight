@@ -21,7 +21,7 @@ all: $(OBJECTS)
 	@mkdir -p $(OBJ_DIR) # Ensure obj directory exists
 	$(CC) $(CFLAGS) -o LogInsight $(OBJECTS)
 	@echo -e "${LOGO}"
-	@echo -e "${YELLOW}            💫 Created by Nighty3098"
+	@echo -e "${YELLOW}            🗲 Created by Nighty3098"
 	@echo -e "${YELLOW}          https://nighty3098.github.io/"
 	@echo -e ""
 	@echo -e ""
@@ -43,7 +43,7 @@ run: all
 install:
 	@echo -e "${LOGO}"
 	@echo -e "${YELLOW}"
-	@echo -e "             🚀 Installing LogInsight..."
+	@echo -e "             🗲 Installing LogInsight..."
 	@sudo cp LogInsight /usr/bin/
 	@echo -e "${GREEN}"
 	@echo -e "    🔥 You can run the program with the command:"
@@ -52,7 +52,7 @@ install:
 uninstall:
 	@echo -e "${LOGO}"
 	@echo -e "${YELLOW}"
-	@echo -e "           🚀 Uninstalling LogInsight..."
+	@echo -e "           🗲 Uninstalling LogInsight..."
 	@sudo rm /usr/bin/LogInsight
 	@echo -e "${GREEN}                   🔥 Done!"
 
