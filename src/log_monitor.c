@@ -147,9 +147,13 @@ void process_line(const char *line, char *filter_levels[], int filter_count, int
 }
 
 void start_log_monitor(const char *file_name, char *filter_levels[], int filter_count, int real_time, int show_stats,
-                       int print_lines)
+                       int print_lines, char *start_date, char *end_date)
 {
     signal(SIGINT, handle_signal);
+
+    printf(start_date);
+    printf("\n");
+    printf(end_date);
 
     compile_regex_patterns();
     if (show_stats)

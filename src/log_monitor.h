@@ -3,8 +3,8 @@
 
 #include <pthread.h>
 
-void start_log_monitor(const char *file_name, char *filter_levels[],
-                       int filter_count, int real_time, int show_stats, int print_lines);
+void start_log_monitor(const char *file_name, char *filter_levels[], int filter_count, int real_time, int show_stats,
+                       int print_lines, char *start_date, char *end_date);
 void process_line(const char *line, char *filter_levels[], int filter_count, int print_lines);
 void count_log_levels(const char *line);
 
