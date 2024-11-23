@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -g -pthread
+CFLAGS= -std=c99 -Wall -Wextra -g -pthread
 
 SRC_DIR=src
 OBJ_DIR=obj
@@ -35,6 +35,7 @@ clean:
 	@echo -e "${YELLOW}               🧹 Cleaning up..."
 	@echo -e ""
 	rm -rf $(OBJ_DIR)/*.o LogInsight
+	rm *.plist
 	rm -rf $(OBJ_DIR)
 
 run: all
