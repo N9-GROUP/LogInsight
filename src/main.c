@@ -100,14 +100,14 @@ int main(int argc, char *argv[])
                     fprintf(stderr, "Invalid start date format: %s\n", argv[i]);
                     return EXIT_FAILURE;
                 }
-                printf("Start date: %s\n", start_date); // Выводим start_date
+                // printf("Start date: %s\n", start_date); // Выводим start_date
 
                 if (i + 1 < argc && argv[i + 1][0] != '-')
                 {
                     end_date = normalize_date(argv[++i]);
                     if (end_date != NULL)
                     {
-                        printf("End date: %s\n", end_date); // Выводим end_date
+                        // printf("End date: %s\n", end_date); // Выводим end_date
                     }
                     else
                     {

@@ -2,12 +2,61 @@
 #include <regex.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_PATTERN_LENGTH 256
 #define MAX_FILTER_LENGTH 256
 
-int should_print_log(const char *line, char *filter_levels[], int filter_count)
+// Функция для разбора даты в формате "YYYY-MM-DD HH:MM:SS"
+int parse_date(const char *date_str, struct tm *date)
 {
+    return sscanf(date_str, "%4d-%2d-%2d %2d:%2d:%2d", &date->tm_year, &date->tm_mon, &date->tm_mday, &date->tm_hour,
+                  &date->tm_min, &date->tm_sec) == 6;
+}
+
+int should_print_log(const char *line, char *filter_levels[], int filter_count, const char *start_date_str,
+                     const char *end_date_str)
+{
+    struct tm start_date = {0}, end_date = {0}, log_date = {0};
+    int has_start_date = 0, has_end_date = 0;
+
+    if (start_date_str && parse_date(start_date_str, &start_date))
+    {
+        start_date.tm_year -= 1900;
+        start_date.tm_mon -= 1;
+        has_start_date = 1;
+    }
+    if (end_date_str && parse_date(end_date_str, &end_date))
+    {
+        end_date.tm_year -= 1900;
+        end_date.tm_mon -= 1;
+        has_end_date = 1;
+    }
+
+    char log_date_str[20];
+    if (sscanf(line, "%19s", log_date_str) == 1)
+    {
+        parse_date(log_date_str, &log_date);
+        log_date.tm_year -= 1900;
+        log_date.tm_mon -= 1;
+    }
+    else
+    {
+        return 0;
+    }
+
+    if (has_start_date || has_end_date)
+    {
+        if (has_start_date && difftime(mktime(&log_date), mktime(&start_date)) < 0)
+        {
+            return 0;
+        }
+        if (has_end_date && difftime(mktime(&log_date), mktime(&end_date)) > 0)
+        {
+            return 0;
+        }
+    }
+
     if (filter_count == 0)
     {
         return 1;
@@ -28,7 +77,7 @@ int should_print_log(const char *line, char *filter_levels[], int filter_count)
 
         int written = snprintf(pattern, sizeof(pattern), "\\|\\s*%s\\s*\\|", filter_level_lower);
 
-        if (written < 0 || written >= sizeof(pattern))
+        if (written < 0 || (size_t)written >= sizeof(pattern))
         {
             fprintf(stderr, "Error formatting regex pattern.\n");
             return 0;

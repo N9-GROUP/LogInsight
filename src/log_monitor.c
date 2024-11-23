@@ -17,7 +17,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define INITIAL_BUFFER_SIZE 1024 // Начальный размер буфера для чтения
+#define INITIAL_BUFFER_SIZE 1024
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define EVENT_BUF_LEN (1024 * EVENT_SIZE)
 
@@ -126,9 +126,10 @@ void count_log_levels(const char *line)
     pthread_mutex_unlock(&count_mutex);
 }
 
-void process_line(const char *line, char *filter_levels[], int filter_count, int print_lines)
+void process_line(const char *line, char *filter_levels[], int filter_count, int print_lines, char *start_date,
+                  char *end_date)
 {
-    if (should_print_log(line, filter_levels, filter_count))
+    if (should_print_log(line, filter_levels, filter_count, start_date, end_date))
     {
         if (print_lines)
         {
@@ -150,10 +151,6 @@ void start_log_monitor(const char *file_name, char *filter_levels[], int filter_
                        int print_lines, char *start_date, char *end_date)
 {
     signal(SIGINT, handle_signal);
-
-    printf(start_date);
-    printf("\n");
-    printf(end_date);
 
     compile_regex_patterns();
     if (show_stats)
@@ -188,7 +185,7 @@ void start_log_monitor(const char *file_name, char *filter_levels[], int filter_
             while ((line_end = strchr(line_start, '\n')) != NULL)
             {
                 *line_end = '\0';
-                process_line(line_start, filter_levels, filter_count, print_lines);
+                process_line(line_start, filter_levels, filter_count, print_lines, start_date, end_date);
                 line_start = line_end + 1;
             }
 
@@ -275,11 +272,10 @@ void start_log_monitor(const char *file_name, char *filter_levels[], int filter_
             while ((line_end = strchr(line_start, '\n')) != NULL)
             {
                 *line_end = '\0';
-                process_line(line_start, filter_levels, filter_count, print_lines);
+                process_line(line_start, filter_levels, filter_count, print_lines, start_date, end_date);
                 line_start = line_end + 1;
             }
 
-            // Move remaining data to the beginning of the buffer
             current_length -= (line_start - buffer);
             memmove(buffer, line_start, current_length);
             offset += bytes_read;
