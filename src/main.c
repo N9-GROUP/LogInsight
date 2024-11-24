@@ -19,14 +19,13 @@ void print_usage(const char *program_name)
     printf(".▀▀▀  ▀█▄▀▪·▀▀▀▀ ▀▀▀▀▀ █▪ ▀▀▀▀ ▀▀▀·▀▀▀▀ ▀▀▀ · ▀▀▀ \n");
     printf("\n");
     printf("\n\033[1;33m");
-    printf(" 🗲 Usage: %s [-r] [-dp] [-h] [-d <start_date> [end_date]] [-f <level>] -i <file>\n", program_name);
+    printf(" 🗲 Usage: %s [-r] [-dp] [-h] [-f <level>] -i <file>\n", program_name);
     printf("      -r             Display all changes in real time\n");
     printf("      -f <level>     Level filtering (CRITICAL, WARNING, INFO, "
            "DEBUG)\n");
     printf("      -i <file>      Path to log file\n");
     printf("      -h, --help     Show this help\n");
     printf("      -dp            Don't print log lines\n");
-    printf("      -d, --date     Filter by date range\n\033[0m");
 }
 
 char *normalize_date(const char *input)
@@ -90,6 +89,7 @@ int main(int argc, char *argv[])
         {
             show_stats = 1;
         }
+        /*
         else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--date") == 0)
         {
             if (i + 1 < argc)
@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
                 }
             }
         }
+        */
     }
 
     if (!file_name)
