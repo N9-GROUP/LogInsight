@@ -2,8 +2,7 @@
 #include <iomanip>
 #include <iostream>
 
-struct LogLevel
-{
+struct LogLevel {
   std::string label;
   long int count;
   const char *color;
@@ -18,8 +17,7 @@ extern long int trace_count;
 extern long int unknown_count;
 extern long int fatal_count;
 
-void print_statistics()
-{
+void print_statistics() {
   LogLevel log_levels[] = {
       {"CRITICAL", critical_count, "\033[1;31m"}, // RED
       {"ERROR", error_count, "\033[1;31m"},       // RED
@@ -34,28 +32,24 @@ void print_statistics()
   const char *border_color = "\033[1;34m";
   const char *reset_color = "\033[0m";
 
-  std::cout << "\n"
-            << reset_color << "┌──────────────────────────────┐ \n";
-  std::cout << "│ " << reset_color << "Log Statistics:              " << reset_color << "│\n";
+  std::cout << "\n" << reset_color << "┌──────────────────────────────┐ \n";
+  std::cout << "│ " << reset_color
+            << "Log Statistics:              " << reset_color << "│\n";
   std::cout << "├────────────┬─────────────────┤ \n";
-  std::cout << "│ " << reset_color << std::setw(10) << "Level" << reset_color << " │ "
-            << std::setw(15) << "Count" << " │\n";
+  std::cout << "│ " << reset_color << std::setw(10) << "Level" << reset_color
+            << " │ " << std::setw(15) << "Count" << " │\n";
   std::cout << "├────────────┼─────────────────┤ \n";
 
-  for (const auto &log_level : log_levels)
-  {
-    if (log_level.count > 0)
-    {
-      std::cout << "│ " << log_level.color
-                << std::setw(10) << log_level.label << reset_color << " │ " << log_level.color << std::setw(15) << log_level.count << reset_color << " │ "
-                << reset_color << "\n";
+  for (const auto &log_level : log_levels) {
+    if (log_level.count > 0) {
+      std::cout << "│ " << log_level.color << std::setw(10) << log_level.label
+                << reset_color << " │ " << log_level.color << std::setw(15)
+                << log_level.count << reset_color << " │ " << reset_color
+                << "\n";
     }
   }
 
   std::cout << reset_color << "└────────────┴─────────────────┘" << "\n";
 }
 
-void display_statistics()
-{
-  print_statistics();
-}
+void display_statistics() { print_statistics(); }

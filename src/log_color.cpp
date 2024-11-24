@@ -11,8 +11,7 @@
 #define ORANGE "\033[38;5;214m"
 #define NC "\033[0m"
 
-void colorize_log(const std::string &line)
-{
+void colorize_log(const std::string &line) {
   const std::vector<std::pair<std::regex, const char *>> patterns = {
       {std::regex("\\|\\s*CRITICAL\\s*\\|", std::regex::icase), RED},
       {std::regex("\\|\\s*WARNING\\s*\\|", std::regex::icase), YELLOW},
@@ -23,15 +22,12 @@ void colorize_log(const std::string &line)
       {std::regex("\\|\\s*TRACE\\s*\\|", std::regex::icase), PURPLE},
       {std::regex("\\|\\s*FATAL\\s*\\|", std::regex::icase), ORANGE}};
 
-  for (const auto &pattern : patterns)
-  {
-    if (std::regex_search(line, pattern.first))
-    {
+  for (const auto &pattern : patterns) {
+    if (std::regex_search(line, pattern.first)) {
       std::cout << pattern.second << line << NC << std::endl;
       return;
     }
   }
 
-  std::cout << line
-            << std::endl;
+  std::cout << line << std::endl;
 }
