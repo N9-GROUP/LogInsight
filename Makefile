@@ -1,6 +1,9 @@
 CC=gcc
 CFLAGS= -std=c99 -Wall -Wextra -g -pthread -v -O2 
 
+CLANG = clang
+FORMATTER = clang-format
+
 SRC_DIR=src
 OBJ_DIR=obj
 
@@ -66,5 +69,10 @@ help:
 	@echo -e "    make install      Install app"
 	@echo -e "    make uninstall    Uninstall app"
 	@echo -e "    make help         Show this help message${RESET}"
+
+format:
+	@bash formatting.sh
+test:
+	@bash test.sh
 
 .PHONY: all clean run help
