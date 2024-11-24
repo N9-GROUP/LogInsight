@@ -7,7 +7,7 @@ OBJ_DIR = obj
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
 OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 
-VERSION = 1.0.1
+VERSION = 1.0.3 - C++
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -20,7 +20,7 @@ LOGO = \n\n${RED}▄▄▌         ▄▄ • ▪   ▐ ▄ .▄▄ · ▪   ▄
 ██▪   ▄█▀▄ ▄█ ▀█▄▐█·▐█▐▐▌▄▀▀▀█▄▐█·▄█ ▀█▄██▀▐█ ▐█.▪\n\
 ▐█▌▐▌▐█▌.▐▌▐█▄▪▐█▐█▌██▐█▌▐█▄▪▐█▐█▌▐█▄▪▐███▌▐▀ ▐█▌·\n\
 .▀▀▀  ▀█▄▀▪·▀▀▀▀ ▀▀▀▀▀ █▪ ▀▀▀▀ ▀▀▀·▀▀▀▀ ▀▀▀ · ▀▀▀\n\
-${RED}                 LogInsight v$(VERSION)\n\n
+${RED}               LogInsight v$(VERSION)\n\n
 
 all: $(OBJECTS)
 	@mkdir -p $(OBJ_DIR)
