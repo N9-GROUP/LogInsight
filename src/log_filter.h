@@ -1,8 +1,9 @@
 #ifndef LOG_FILTER_H
 #define LOG_FILTER_H
 
-#include <stddef.h>
+#include <string>
+#include <vector>
 
-int should_print_log(const char *line, char *filter_levels[], int filter_count);
+bool should_print_log(const std::string &line, const std::vector<std::string> &filter_levels);
 
 #endif // LOG_FILTER_H

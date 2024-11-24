@@ -1,12 +1,14 @@
 #ifndef LOG_MONITOR_H
 #define LOG_MONITOR_H
 
+#include <string>
+#include <vector>
 #include <pthread.h>
 
-void start_log_monitor(const char *file_name, char *filter_levels[],
-                       int filter_count, int real_time, int show_stats, int print_lines);
-void process_line(const char *line, char *filter_levels[], int filter_count, int print_lines);
-void count_log_levels(const char *line);
+void start_log_monitor(const std::string &file_name, const std::vector<std::string> &filter_levels,
+                       bool real_time, bool show_stats, bool print_lines);
+void process_line(const std::string &line, const std::vector<std::string> &filter_levels, bool print_lines);
+void count_log_levels(const std::string &line);
 
 extern pthread_mutex_t count_mutex;
 

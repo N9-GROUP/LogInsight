@@ -1,6 +1,8 @@
 #ifndef FILE_SIZE_H
 #define FILE_SIZE_H
 
-void print_file_size(const char *file_name);
+#include <string>
+
+void print_file_size(const std::string &file_name);
 
 #endif // FILE_SIZE_H

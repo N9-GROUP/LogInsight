@@ -19,3 +19,4 @@ new_memuse.txt
 /li
 /src/__pycache__
 /venv
+*.plist
