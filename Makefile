@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -std=c99 -Wall -Wextra -g -pthread
+CFLAGS= -std=c99 -Wall -Wextra -g -pthread -v -O2 
 
 SRC_DIR=src
 OBJ_DIR=obj
