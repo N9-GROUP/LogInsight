@@ -112,7 +112,10 @@ void process_line(const std::string &line,
 
 void start_log_monitor(const std::string &file_name,
                        const std::vector<std::string> &filter_levels,
-                       bool real_time, bool show_stats, bool print_lines) {
+                       bool real_time, bool show_stats, bool print_lines,
+                       const std::string &start_date,
+                       const std::string &end_date) {
+
   std::signal(SIGINT, handle_signal);
   start_monitoring();
 
