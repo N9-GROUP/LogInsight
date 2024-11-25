@@ -50,4 +50,3 @@ Usage: ./LogInsight [-r] [-f <level>] -i <file>
 <img src="imgs/2.png" />
 <img src="imgs/3.png" />
 <img src="imgs/4.png" />
-<img src="imgs/5.png" />
