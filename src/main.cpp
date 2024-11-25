@@ -1,6 +1,7 @@
 #include "main.h"
 #include "log_monitor.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -18,18 +19,20 @@ void print_usage(const std::string &program_name) {
   std::cout << "\n";
   std::cout << "\n\033[1;33m";
   std::cout << "Usage: " << program_name
-            << " [-r] [-dp] [-h] [-f <level>] -i <file>\n";
+            << " [-r] [-dp] [-h] [-d] [-f <level>] -i <file>\n";
   std::cout << "    -r             Display all changes in real time\n";
   std::cout << "    -f <level>     Level filtering (CRITICAL, WARNING, INFO, "
                "DEBUG)\n";
   std::cout << "    -i <file>      Path to log file\n";
   std::cout << "    -h, --help     Show this help\n";
-  std::cout << "    -dp            Don't print log lines\n\033[0m";
+  std::cout << "    -dp            Don't print log lines\n";
+  std::cout << "    -d, --date     Filter by date (YYYY-MM-DD)\n\033[0m";
 }
 
 int main(int argc, char *argv[]) {
   std::string file_name;
   std::vector<std::string> filter_levels;
+  std::string start_date, end_date;
   bool real_time = false;
   bool show_stats = false;
   bool print_lines = true;
@@ -52,6 +55,17 @@ int main(int argc, char *argv[]) {
     } else if (std::string(argv[i]) == "-s" ||
                std::string(argv[i]) == "--stats") {
       show_stats = true;
+    } else if ((std::string(argv[i]) == "-d" ||
+                std::string(argv[i]) == "--date") &&
+               i + 1 < argc) {
+      std::string date_arg = argv[++i];
+      if (date_arg.find('-') != std::string::npos) {
+        std::istringstream date_stream(date_arg);
+        std::getline(date_stream, start_date, '-');
+        std::getline(date_stream, end_date, '-');
+      } else {
+        start_date = date_arg;
+      }
     }
   }
 
@@ -61,7 +75,7 @@ int main(int argc, char *argv[]) {
   }
 
   start_log_monitor(file_name, filter_levels, real_time, show_stats,
-                    print_lines);
+                    print_lines, start_date, end_date);
 
   return EXIT_SUCCESS;
 }
